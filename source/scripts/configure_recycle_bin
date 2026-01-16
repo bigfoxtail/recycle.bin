@@ -102,7 +102,11 @@ if ($smb_file) {
 
 	/* Adjust repository with user parameters. */
 	if ((isset($recycle_bin_cfg['PARAMETERS'])) && ($recycle_bin_cfg['PARAMETERS'])) {
-		$parms['recycle:repository'] .= "/".$recycle_bin_cfg['PARAMETERS'];
+		if (str_starts_with($recycle_bin_cfg['PARAMETERS'], '%P')) {
+			$parms['recycle:repository'] .= $recycle_bin_cfg['PARAMETERS'];
+		} else {
+			$parms['recycle:repository'] .= "/".$recycle_bin_cfg['PARAMETERS'];
+		}
 	}
 
 	/* Parse the samba config file. */
